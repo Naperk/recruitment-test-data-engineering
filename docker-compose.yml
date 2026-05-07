@@ -15,7 +15,7 @@ services:
       - "3306:3306"
     restart: always
 
-ingest-data:
+  ingest-data:
     image: ingest-data
     build: images/ingest-data
     command: ["./ingest.py"]
