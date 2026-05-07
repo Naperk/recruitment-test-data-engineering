@@ -15,6 +15,24 @@ services:
       - "3306:3306"
     restart: always
 
+ingest-data:
+    image: ingest-data
+    build: images/ingest-data
+    command: ["./ingest.py"]
+    volumes:
+      - ./data:/data
+    depends_on:
+      - database
+
+  output-data:
+    image: output-data
+    build: images/output-data
+    command: ["./output.py"]
+    volumes:
+      - ./data:/data
+    depends_on:
+      - database
+
   example-c:
     image: example-c
     build: images/example-c
