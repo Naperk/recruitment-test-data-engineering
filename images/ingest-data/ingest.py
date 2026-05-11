@@ -23,13 +23,6 @@ def connect(retries=10, delay=3):
                 raise
 
 
-def truncate_tables(cursor):
-    cursor.execute("SET FOREIGN_KEY_CHECKS = 0")
-    cursor.execute("TRUNCATE TABLE people")
-    cursor.execute("TRUNCATE TABLE places")
-    cursor.execute("SET FOREIGN_KEY_CHECKS = 1")
-
-
 def load_places(cursor):
     with open('/data/places.csv', encoding='utf-8') as f:
         for row in csv.DictReader(f):
@@ -55,7 +48,6 @@ def main():
     conn = connect()
     try:
         with conn.cursor() as cur:
-            truncate_tables(cur)
             load_places(cur)
             load_people(cur)
         conn.commit()
